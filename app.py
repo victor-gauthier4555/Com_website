@@ -6,7 +6,7 @@ import requests
 app = Flask(__name__)
 CORS(app)  # Autoriser les requêtes depuis React
 
-RECAPTCHA_SECRET_KEY = "6LdAJvMqAAAAAKP1relcls94Fr9119xNWIqOa4FZ"
+RECAPTCHA_SECRET_KEY = "6LdAJvMqAAAAAKP1relcls94Fr91l9xNWlqOa4FZ"
 
 # Fichier pour stocker les compteurs
 DATA_FILE = "compteurs.json"
