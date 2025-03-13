@@ -1,0 +1,172 @@
+/* Style général */
+.intro-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff;
+}
+
+/* Conteneur principal */
+.intro-page .container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+/* Triangle bleu foncé */
+.intro-page .shape-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30%;
+    height: 35%;
+    background-color: #2d2750;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 50px 80px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Texte à l'intérieur du triangle */
+.intro-page .text-inside {
+    color: white;
+    text-align: left;
+    max-width: 80%;
+    margin-left: -30px;
+    margin-top: -10px;
+
+}
+
+.intro-page .text-inside h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Cadre du texte descriptif */
+.intro-page .quiz-description {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    max-width: 600px; /* Empêche que le texte soit trop large */
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+/* Titre du quiz */
+.intro-page .quiz-description h2 {
+    font-size: 24px;
+    color: #2d2750;
+    margin-bottom: 15px;
+}
+
+/* Texte */
+.intro-page .quiz-description p {
+    font-size: 18px;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Conteneur du logo */
+.intro-page .logo {
+    position: absolute;
+    top: 20px;
+    right: 100px;
+    background-color: #98c8c8;
+    padding: 20px 40px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Image du logo */
+.intro-page .logo img {
+    max-width: 180px;
+    height: auto;
+}
+
+/* Conteneur du bouton */
+.intro-page .button-container {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Bouton commencer */
+.intro-page .start-button {
+    background-color: #2d2750;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.intro-page .start-button:hover {
+    background-color: #1b1938;
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Animation d'apparition fluide pour IntroPage uniquement */
+.intro-page {
+    animation: fadeInIntro 0.8s forwards;
+}
+
+@keyframes fadeInIntro {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Ajustement responsive */
+/* Cadre du texte descriptif */
+.intro-page .quiz-description {
+    position: absolute;
+    top: 60%; /* On le descend un peu plus */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    max-width: 650px;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+/* Ajustement pour le bouton */
+.intro-page .button-container {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Ajustement responsive */
+@media (max-width: 768px) {
+    .intro-page .quiz-description {
+        top: 58%; /* Ajuste encore plus sur mobile */
+        width: 85%;
+        padding: 20px;
+    }
+}
+
+
+
+

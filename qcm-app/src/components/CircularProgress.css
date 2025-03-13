@@ -1,0 +1,37 @@
+.circular-progress {
+  position: relative;
+  display: inline-block;
+  width: 80px; /* Taille réduite */
+  height: 80px; /* Taille réduite */
+}
+
+.progress-circle {
+  transform: rotate(-90deg);
+}
+
+.progress-circle__background,
+.progress-circle__foreground {
+  fill: none;
+  stroke: rgba(166, 184, 182, 0.62); /* Couleur de fond du cercle */
+  cx: 40; /* Coordonnée centrée mise à jour */
+  cy: 40; /* Coordonnée centrée mise à jour */
+  r: 35; /* Rayon réduit pour correspondre à la nouvelle taille */
+  stroke-width: 5;
+}
+
+.progress-circle__foreground {
+  stroke: #36b1a4; /* Couleur de progression */
+  transition: stroke-dashoffset 0.35s;
+  stroke-linecap: round;
+}
+
+.progress-text {
+  position: absolute;
+  top: 98%;
+  left: 53%;
+  transform: translate(-50%, -50%);
+  font-size: 16px; /* Taille de la police réduite pour correspondre */
+  font-weight: bold;
+  color: #000000; /* Couleur du texte */
+}
+
