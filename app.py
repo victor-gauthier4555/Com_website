@@ -1,35 +1,36 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import json
+from flask_sqlalchemy import SQLAlchemy
 import os
 
 app = Flask(__name__)
-CORS(app)  # Autoriser les requêtes depuis React
+CORS(app)
 
-# Fichier pour stocker les compteurs
-DATA_FILE = "compteurs.json"
+# Configuration de la base de données
+# Pour Render, vous pouvez définir DATABASE_URL dans vos variables d'environnement
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
-def load_counters():
-    if os.path.exists(DATA_FILE):
-        with open(DATA_FILE, "r") as f:
-            data = json.load(f)
-            return data.get("tests_commences", 0), data.get("tests_finies", 0)
-    return 0, 0
+class Counter(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    tests_commences = db.Column(db.Integer, default=0)
+    tests_finies = db.Column(db.Integer, default=0)
 
-def save_counters(tests_commences, tests_finies):
-    with open(DATA_FILE, "w") as f:
-        json.dump({"tests_commences": tests_commences, "tests_finies": tests_finies}, f)
-
-# Charger les compteurs au démarrage du serveur
-tests_commences, tests_finies = load_counters()
+with app.app_context():
+    db.create_all()
+    counter = Counter.query.first()
+    if not counter:
+        counter = Counter(tests_commences=0, tests_finies=0)
+        db.session.add(counter)
+        db.session.commit()
 
 @app.route('/')
 def home():
-    return "Flask fonctionne avec ngrok !"
+    return "Flask fonctionne avec Render !"
 
 @app.route('/start_test', methods=['POST'])
 def start_test():
-    global tests_commences
     data = request.get_json()
     print("Données reçues par Flask :", data)
 
@@ -38,22 +39,26 @@ def start_test():
     if honeypot_value:
         return jsonify({"success": False, "message": "Bot détecté (honeypot)"}), 403
 
-    tests_commences += 1
-    return jsonify({"success": True, "tests_commences": tests_commences})
+    counter = Counter.query.first()
+    counter.tests_commences += 1
+    db.session.commit()
+    return jsonify({"success": True, "tests_commences": counter.tests_commences})
 
 @app.route('/finish_test', methods=['POST'])
 def finish_test():
-    global tests_finies
-    tests_finies += 1
-    save_counters(tests_commences, tests_finies)
-    return jsonify({"message": "Test terminé", "tests_finies": tests_finies})
+    counter = Counter.query.first()
+    counter.tests_finies += 1
+    db.session.commit()
+    return jsonify({"message": "Test terminé", "tests_finies": counter.tests_finies})
 
 @app.route('/stats', methods=['GET'])
 def get_stats():
-    return jsonify({"tests_commences": tests_commences, "tests_finies": tests_finies})
+    counter = Counter.query.first()
+    return jsonify({"tests_commences": counter.tests_commences, "tests_finies": counter.tests_finies})
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 
 
